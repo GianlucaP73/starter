@@ -1,0 +1,380 @@
+/* Regola di box-sizing
+Iniziamo con questa regola che gestisce come il browser calcolerà la dimensione dei nostri elementi */
+/*
+BOX-SIZING
+Per impostazione predefinita nel box model CSS, width e height assegnato a un elemento viene applicato solo alla casella del contenuto dell'elemento. Se l'elemento ha un bordo o un riempimento, questo viene quindi aggiunto a width e height per arrivare alla dimensione del riquadro visualizzato sullo schermo. Ciò significa che quando si imposta width e height, è necessario modificare il valore fornito per consentire l'aggiunta di qualsiasi bordo o riempimento. Ad esempio, se hai quattro riquadri con width: 25%;, se qualcuno ha un riempimento sinistro o destro o un bordo sinistro o destro, per impostazione predefinita non si adatteranno su una riga entro i vincoli del contenitore principale.
+
+Proprietà box-sizing:
+
+    content-box (predefinito)
+    ti dà il comportamento predefinito di ridimensionamento della casella CSS. Se imposti la larghezza di un elemento su 100 pixel, la casella del contenuto dell'elemento sarà larga 100 pixel e la larghezza di qualsiasi bordo o riempimento verrà aggiunta alla larghezza finale renderizzata, rendendo l'elemento più largo di 100 px.
+
+    border-box
+    dice al browser di tenere conto di qualsiasi bordo e riempimento nei valori specificati per la larghezza e l'altezza di un elemento. Se imposti la larghezza di un elemento su 100 pixel, quei 100 pixel includeranno qualsiasi bordo o riempimento aggiunto e la casella del contenuto si ridurrà per assorbire quella larghezza extra.
+
+    inherit
+    Eredita questa proprietà dal suo elemento padre.
+
+    initial
+    Imposta questa proprietà al suo valore predefinito.
+*/
+ /* il selettore html ha specificità 1 */
+html {
+    box-sizing: border-box;
+    font-size: 18px;
+
+}
+/* Poi facciamo in modo che tutti gli elementi, gli pseudo elementi
+before e after, ereditino in box-sizing da html*/
+
+
+/* il selettore universale(*) ha specificità 0 */
+*, *::before, *::after {
+    /* Tutti gli elementi andranno ad ereditare il box-sizing da html 
+    inherit = ereditare */
+    box-sizing: inherit;
+}
+/* eliminiamo il margine fornito dal browser */
+body {
+    margin: 0;
+    /* assegnamo il primo font-family */
+    font-family: 'Nunito', sans-serif;
+}
+
+/* Gestiamo i primi stili legati all'header */
+.header__inner,
+.trending-recipes,
+.recipes {
+    /* gestiamo la dimensione */
+    max-width: 1320px;
+    /* centriamo orizzontalmente */
+    margin: 0 auto;
+    width: 90%;
+    padding: 24px;
+}
+
+/* assegniamo proprietà specifiche alla sezione header__inner */
+.header__inner {
+    /* lo facciamo diventare un contenitore flex */
+    display: flex;
+    /* collochiamo i ns elementi agli estremi del contenitori e quelli in mezzo divideranno lo spazio restante in parti uguali */
+    justify-content: space-between;
+    /* centriamo verticalmente gli elementi */
+    align-items: center;
+    border-bottom: 2px solid #f2f2f2;
+}
+
+/* --- Gestiamo il nav rispetto agli altri elementi per tenerlo al centro dell'header__inner --- */
+
+/* assegnamo a tutti i figli diretti di header__inner la proprietà flex: 1 che li va a resettare */
+.header__inner > * {
+    /* flex: 1 è la SHORTEND di flex-grow flex-shrink flex-basis che imposta i valori a (0 1 100%) 
+    così che gli elementi si comportino in maniera leggermente diversa rispetto alla situazione 
+    default quando sono all'interno di un contenitore flex */
+    flex: 1;
+}
+/* andiamo ad allineare a dx tutti gli elementi .header-cta e .menu-toggle di header__inner */
+.header__inner .header-cta,
+.header__inner .menu-toggle {
+    text-align: right;
+}
+/* ----------------------------------------------------------------------------------------------- */
+
+.menu-toggle {
+    /* togliamo la maggiorn parte degli stile del bottone */
+    appearance: none;
+    border: 0;
+    background: transparent;
+}
+
+.menu-toggle svg{
+    width: 24px;
+    height: 24px;
+}
+
+.header__inner h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header__inner nav {
+    /* nascondiamo il menu nav che invece attiveremo nella media query */
+    display: none;
+    text-align: center;
+}
+
+.header__inner .header-cta {
+    /* nascondiamo il il bottone cta che invece attiveremo nella media query */
+    display: none;
+}
+
+.header__inner nav ul {
+    /* lo facciamo diventare un contenitore flex */
+    display: flex;
+    /* divario tra i vari elementi */
+    gap: 48px;
+    /* togliamo i bullet-point (pallini dell'elenco) */
+    list-style: none;
+    /* siccome gli elenchi puntati sul lato sx hanno un padding di 30px di default andiamo a toglierlo */
+    padding-left: 0px;
+    /* allineiamo centralmente gli elementi sull'asse orizzontale */
+    justify-content: center;
+}
+/* caratterizziamo i link */
+a {
+    text-decoration: none;
+    font-weight: 700;
+    color: #423b2f;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+/* caratterizziamo la classe btn */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 4px;
+    border: 1px solid #ed7e4a;
+    color: #ed7e4a;
+    background: transparent;
+    text-decoration: none;
+    /* ease è la funzione di transizione */
+    transition: color .5s ease;
+}
+
+.btn:hover {
+    /* to right - sfumatura verso dx */
+    background: linear-gradient(to right, #f28b57, #ed7e4a);
+    color: #fff;
+    text-decoration: none;
+}
+
+/* il selettore has controlla se hgroup ha fancy-text e di conseguenza deve avere queste proprietà */
+hgroup:has(.fancy-text) {
+    /* position: relative ci permette di tracciare un confine per muovere
+    liberamente degli elementi all'interno, con una position absolute */
+    position: relative;
+    margin-top: 48px;
+}
+
+hgroup:has(.fancy-text) h2 {
+    margin: 0;
+    /* interlinea */
+    line-height: 1;
+    font-size: 48px;
+    font-family: 'Bodoni Moda', serif;
+}
+
+.fancy-text {
+    font-family: 'Oooh Baby', cursive;
+    font-size: 24px;
+    margin: 0;
+    position: absolute;
+    top: -25px;
+    color: #ed7e4a;
+}
+
+.hero {
+    position: relative;
+    width: 100%;
+    background-image: url('./images/hero.jpg');
+    /* L'immagine viene ristretta o meglio si adatta in base alla larghezza del contenitore */
+    background-size: cover;
+    background-position: center;
+    /* serve per non far ripetere le immagini specie quando sono piccole */
+    background-repeat: no-repeat;
+    /* serve per ottenere un effetto parallax che offre più dinamicità all'hero nel suo complesso */
+    background-attachment: fixed;
+}
+/* lavoriamo sul contenuto del nostra sezione hero che è hgroup */
+.hero hgroup {
+    position: relative;
+    text-align: center;
+    width: 90%;
+    margin: 0 auto;
+    padding: 190px 0;
+    /* lavoriamo sull'asse delle z, come i livelli di Photoshop e questo permette di avere questo selettore al di sopra degli altri */
+    z-index: 1;
+}
+
+.hero hgroup p,
+.hero hgroup h2 {
+    margin: 0;
+    color: #fff;
+    /* ombreggiatura = asse(x) asse(y) blur */
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.hero hgroup h2 {
+    font-size: 48px;
+    font-family: 'Bodoni Moda', serif;
+}
+
+.hero hgroup hr {
+    width: 100px;
+    height: 2px;
+    background: #fff;
+    border: 0;
+    margin: 24px auto;
+}
+
+.hero hgroup p {
+    font-size: 20px;
+    font-family: 'Nunito', sans-serif;
+}
+
+/* mettiamo un overlay sull'immagine di sfondo per rendere il testo più leggibile*/
+/* usiamo gli pseudo elementi, lo collochiamo questo contenitore per l'overlay dopo o meglio prima della chiusura */
+.hero::after {
+    /* content per poter creare un contenitore */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* larghezza 100% del suo genitore ovvero hero */
+    width: 100%;
+    /* altezza 100% del suo genitore ovvero hero */
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    /* abbiamo creato questo overlay ma è sopra il testo e invece andrebbe sotto quindi dobbiamo dare una
+    proprietà extra al nostro hgroup perché il testo vada sopra il livello overlay */
+}
+
+.recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    list-style: none;
+    padding-left: 0;
+}
+.recipes ul li {
+    list-style: none;
+}
+
+/* impostazioni generali per la card delle ricette */
+.recipe-card {
+    max-width: 400px;
+    /* sarà un contenitore flex */
+    display: flex;
+    /* orientamento verticale */
+    flex-direction: column;
+    border: 1px solid #f4f4f4;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 20px;
+    /* CSS Overflow (eccesso dell'immagine)
+    La proprietà overflow specifica se ritagliare il contenuto o aggiungere barre di scorrimento quando il contenuto di un elemento è troppo grande per adattarsi all'area specificata.
+    * visible- Predefinito. L'overflow non viene tagliato. Il contenuto viene visualizzato all'esterno del riquadro dell'elemento
+    * hidden- L'overflow verrà tagliato e il resto del contenuto sarà invisibile
+    * scroll- L'overflow viene tagliato e viene aggiunta una barra di scorrimento per vedere il resto del contenuto
+    * auto- Simile a scroll, ma aggiunge le barre di scorrimento solo quando necessario.
+    Questo ci permetterà di vedere i bordi arrotondati sull'immagine.
+    */
+    overflow: hidden;
+}
+/* assegniamo una larghezza alle icone svg dentro le card */
+.recipe-card svg {
+    width: 24px;
+}
+/* lavoriamo sull'immagine della card */
+.recipe-card .recipe-card__image {
+    aspect-ratio: 16/9;
+}
+
+.recipe-card .recipe-card__image img {
+    /*é l'immagine prende larghezza e altezza del contenitore recipe-card__image */
+    width: 100%;
+    height: 100%;
+    /* in base al contenitore l'immagine si adatta come se fosse una maschera di ritaglio */
+    object-fit: cover;
+}
+
+/* specificità della parte testuale della card */
+.recipe-card .recipe-card__text {
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+/* rimoviamo un po' di margini nella parte testuale di card e così condensiamo maggiormente i testi tra di loro */
+.recipe-card .recipe-card__text > * {
+    margin: 0;
+}
+/* formattiamo questo blocco per dargli maggiore carattere */
+.recipe-card .recipe-card__text .recipe-category {
+    /* visualizzazione a blocchi in linea */
+    display: inline-block;
+    /* sfondo arancione */
+    background: #ed7e4a;
+    padding: 4px 8px;
+    /* bordi arrotondati */
+    border-radius: 4px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    /* adatta la larghezza al contenuto in questo caso al testo+padding */
+    width: fit-content;
+}
+
+.recipe-card .recipe-card__text p {
+    font-size: 14px;
+    color: #a9a9a9;
+}
+
+.recipe-card__meta {
+    /* bordo superiore */
+    border-top: 1px solid #f4f4f4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+}
+/* specifiche per le stelle della valutazione */
+.star-rating {
+    display: flex;
+    gap: 4px;
+    list-style: none;
+    padding-left: 0;
+    color: #528f6b;
+}
+
+.star-rating .active-star svg {
+    fill: #528f6b;
+}
+
+.prep-time {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+}
+
+.prep-time span:first-of-type {
+    font-weight: 700;
+}
+
+.prep-time span:last-of-type {
+    color: #a9a9a9;
+}
+
+.footer {
+    text-align: center;
+    padding: 24px;
+    background-color: #ed7e4a;
+    color: #fff;
+}
+
+/* MEDIA QUERY */
+/* quando il viewport supererà i 1024px */
+@media (min-width: 1024px) {
+    .header__inner nav,
+    .header__inner .header-cta {
+        display: block;
+    }
+    .menu-toggle {
+        display: none;
+    }
+    .hero hgroup {
+        width: 50%;
+    }
+}
